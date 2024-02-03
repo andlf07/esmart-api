@@ -5,7 +5,7 @@ Este proyecto fue realizado para prueba de desarrollo.
 
 REST API desarrollada con tecnologias como Nodejs, Express, Sequelize, Postgresql
 
-Deploy: https://esmart-api.onrender.com
+Deploy: https://esmart-api.onrender.com/api/v1
 
 Diagrama de base de datos Postgresql: https://dbdiagram.io/d/esmart-test-654e7aee7d8bbd6465f32476
 
