@@ -2,29 +2,29 @@ import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 import { SensorModel } from './Sensor.model';
 import { ModelInitializer } from './interface/ModelInitializer.interface';
 
-export interface UserAttributes {
+export interface AlertAttributes {
   id?: number;
-  username?: string;
+  description?: string;
   enabled?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
 
-export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+export interface AlertCreationAttributes extends Optional<AlertAttributes, 'id'> {}
 
-export class UserModel extends Model<UserAttributes, UserCreationAttributes> {
+export class AlertModel extends Model<AlertAttributes, AlertCreationAttributes> {
   public id!: number;
-  public username!: string;
+  public description!: string;
   public enabled!: boolean;
   public readonly createdAt!: string;
-  public readonly updated_at!: string;
+  public readonly updatedAt!: string;
 }
 
-export class UserModelInitializer implements ModelInitializer {
+export class AlertModelInitializer implements ModelInitializer {
   constructor(private client: Sequelize) {}
 
   initialize(): void {
-    UserModel.init(
+    AlertModel.init(
       {
         id: {
           primaryKey: true,
@@ -32,15 +32,9 @@ export class UserModelInitializer implements ModelInitializer {
           defaultValue: DataTypes.UUIDV4(),
           unique: true,
         },
-        username: {
+        description: {
+          type: new DataTypes.TEXT(),
           allowNull: false,
-          type: new DataTypes.STRING(128),
-          unique: true,
-          validate: {
-            notEmpty: {
-              msg: 'username cant be empty',
-            },
-          },
         },
         enabled: {
           type: new DataTypes.BOOLEAN(),
@@ -50,19 +44,19 @@ export class UserModelInitializer implements ModelInitializer {
       },
       {
         sequelize: this.client,
-        modelName: 'User',
-        tableName: 'users',
+        modelName: 'Alert',
+        tableName: 'telemetries',
         timestamps: true,
       }
     );
   }
   assosiations(): void {
-    UserModel.hasMany(SensorModel, {
+    AlertModel.belongsTo(SensorModel, {
       foreignKey: {
-        name: 'user_id',
-        allowNull: true,
+        name: 'sensor_id',
+        allowNull: false,
       },
-      as: 'sensors',
+      as: 'sensor',
       onDelete: 'SET NULL',
       onUpdate: 'CASCADE',
     });

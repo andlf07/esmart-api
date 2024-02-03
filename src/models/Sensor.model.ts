@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 import { TelemetryModel } from './Telemetry.model';
 import { UserModel } from './User.model';
+import { UserRulesModel } from './UserRules.model';
 import { ModelInitializer } from './interface/ModelInitializer.interface';
 
 export interface SensorAttributes {
@@ -53,6 +54,15 @@ export class SensorModelInitializer implements ModelInitializer {
     );
   }
   assosiations(): void {
+    SensorModel.hasMany(TelemetryModel, {
+      foreignKey: {
+        name: 'sensor_id',
+        allowNull: true,
+      },
+      as: 'telemetryRecords',
+      onDelete: 'SET NULL',
+      onUpdate: 'CASCADE',
+    });
     SensorModel.belongsTo(UserModel, {
       foreignKey: {
         name: 'user_id',
@@ -63,12 +73,12 @@ export class SensorModelInitializer implements ModelInitializer {
       onUpdate: 'CASCADE',
     });
 
-    SensorModel.hasMany(TelemetryModel, {
+    SensorModel.hasMany(UserRulesModel, {
       foreignKey: {
         name: 'sensor_id',
         allowNull: true,
       },
-      as: 'telemetryRecords',
+      as: 'rules',
       onDelete: 'SET NULL',
       onUpdate: 'CASCADE',
     });

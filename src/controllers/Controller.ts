@@ -17,7 +17,7 @@ export class Controller implements ControllerInterface {
     let response: ResponseInterface = {};
     const query = req.query;
 
-    const { page = 1, pageSize = 12, ...restParams } = query;
+    const { page = 1, pageSize = 12 } = query;
 
     const { page: pageNumber, pageSize: sizePage } = pagination({ page, pageSize });
 

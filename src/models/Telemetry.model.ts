@@ -4,7 +4,7 @@ import { ModelInitializer } from './interface/ModelInitializer.interface';
 
 export interface TelemetryAttributes {
   id?: number;
-  timestamp?: string;
+  timestamp?: number;
   temperature?: number;
   humidity?: number;
   flow?: number;
@@ -18,7 +18,7 @@ export interface TelemetryCreationAttributes extends Optional<TelemetryAttribute
 
 export class TelemetryModel extends Model<TelemetryAttributes, TelemetryCreationAttributes> {
   public id!: number;
-  public timestamp!: string;
+  public timestamp!: number;
   public temperature!: number;
   public humidity!: number;
   public flow!: number;
@@ -69,7 +69,7 @@ export class TelemetryModelInitializer implements ModelInitializer {
       {
         sequelize: this.client,
         modelName: 'Telemetry',
-        tableName: 'telemetries',
+        tableName: 'telemetry_records',
         timestamps: true,
       }
     );
@@ -78,7 +78,7 @@ export class TelemetryModelInitializer implements ModelInitializer {
     TelemetryModel.belongsTo(SensorModel, {
       foreignKey: {
         name: 'sensor_id',
-        allowNull: false,
+        allowNull: true,
       },
       as: 'sensor',
       onDelete: 'SET NULL',

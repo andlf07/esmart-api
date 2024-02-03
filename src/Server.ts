@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import * as http from 'http';
@@ -17,6 +18,7 @@ export class Server {
     this.express = express();
     this.logger = logger;
 
+    this.express.use(cors());
     this.express.use(helmet());
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: true }));
