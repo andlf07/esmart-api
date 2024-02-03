@@ -1,9 +1,12 @@
 import dotenv from 'dotenv';
-import path from 'path';
+// import path from 'path';
 
-dotenv.config({
-  path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`),
-});
+
+dotenv.config()
+
+// dotenv.config({
+//   path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`),
+// });
 
 export const serverConfig = {
   SERVER_PORT: process.env.PORT || '3001',

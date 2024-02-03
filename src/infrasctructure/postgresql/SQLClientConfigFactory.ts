@@ -12,7 +12,8 @@ export class SQLConfigFactory {
       },
       dialectOptions: {
         decimalNumbers: true,
-        ssl: serverConfig.MODE === 'development' ? false : true,
+        ssl: true,
+        // ssl: serverConfig.MODE === 'development' ? false : true,
       },
       dialect: 'postgres',
       host: `${serverConfig.DB_DOMAIN}`,
